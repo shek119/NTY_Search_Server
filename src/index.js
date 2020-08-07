@@ -5,8 +5,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const { setHeader } = require("./middleware/setHeader");
+const { checkEmailUsernameUni } = require("./middleware/verifySignUp");
 const articlesSearch = require("./routes/articles");
 const authRoutes = require("./routes/auth");
+const userRoutes = require("./routes/user");
 
 const port = 8000;
 
@@ -31,6 +33,7 @@ app.use(bodyParser.json());
 
 app.use("/search", articlesSearch);
 app.use("/auth", [setHeader], authRoutes);
+app.user("/:id", [checkEmailUsernameUni], userRoutes);
 
 app.get("/", (req, res) => {
   res.json("Hello World");
