@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 app.use("/search", articlesSearch);
 app.use("/auth", [setHeader], authRoutes);
-app.user("/:id", [checkEmailUsernameUni], userRoutes);
+app.use("/:id", [checkEmailUsernameUni], userRoutes);
 
 app.get("/", (req, res) => {
   res.json("Hello World");
