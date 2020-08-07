@@ -36,4 +36,31 @@ const saveArticle = (req, res) => {
   );
 };
 
-module.exports = { saveArticle };
+const getArticles = (req, res) => {
+  const id = req.query.id;
+
+  User.findById(id, (err, user) => {
+    if (err) console.log(err);
+    res.status(200).json(user.articles);
+  });
+
+  // res.status(200).send({ msg: "sending articles" });
+};
+
+const delArticle = (req, res) => {
+  const { id, articleId } = req.query;
+  console.log(req.query);
+
+  User.findById(id, (err, user) => {
+    if (err) console.log(err);
+    const newArr = user.articles.filter(
+      (ele) => ele._id !== articleId || typeof ele !== "object"
+    );
+    user.articles = newArr;
+    user.save();
+
+    res.status(200);
+  });
+};
+
+module.exports = { saveArticle, getArticles, delArticle };
