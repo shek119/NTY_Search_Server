@@ -36,6 +36,8 @@ const signIn = (req, res) => {
       expiresIn
     });
 
+    // console.log(token);
+
     res.status(200).send({ accessToke: token, id: user._id, expiresIn });
   });
 };

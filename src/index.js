@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const { setHeader } = require("./middleware/setHeader");
-const { checkEmailUsernameUni } = require("./middleware/verifySignUp");
+const verifyToken = require("./middleware/authJWT");
 const articlesSearch = require("./routes/articles");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 
 app.use("/search", articlesSearch);
 app.use("/auth", [setHeader], authRoutes);
-app.use("/:id", [checkEmailUsernameUni], userRoutes);
+app.use("/:id", [verifyToken], userRoutes);
 
 app.get("/", (req, res) => {
   res.json("Hello World");
